@@ -3,26 +3,27 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import pages.DevLoginPage;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class LoginPageTest {
+public class DevLoginPageTest {
     private WebDriver driver;
-    private LoginPage loginPage;
+    private DevLoginPage devLoginPage;
 
     @BeforeEach
     public void setUp() {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-        loginPage = new LoginPage(driver);
+        devLoginPage = new DevLoginPage(driver);
     }
 
     @Test
     public void testLoginToDashboard() {
-        loginPage.goToLoginPage();
-        loginPage.enterEmail("admin@ugm.ac.id ");  // Ganti dengan akun yang valid
-        loginPage.enterPassword("AdminDwi");          // Ganti dengan password valid
-        loginPage.clickLoginButton();
+        devLoginPage.goToLoginPage();
+        devLoginPage.enterEmail("admin@ugm.ac.id ");  // Ganti dengan akun yang valid
+        devLoginPage.enterPassword("AdminDwi");          // Ganti dengan password valid
+        devLoginPage.clickLoginButton();
 
         // Validasi sederhana setelah login, bisa diubah jika kamu tahu URL/elemen dashboard
         assertTrue(driver.getCurrentUrl().contains("dashboard")

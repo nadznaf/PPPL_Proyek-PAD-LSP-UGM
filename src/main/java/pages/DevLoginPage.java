@@ -1,7 +1,9 @@
+package pages;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class LoginPage {
+public class DevLoginPage {
     private WebDriver driver;
 
     // Lokator input dan tombol dari halaman HTML yang kamu berikan
@@ -9,7 +11,7 @@ public class LoginPage {
     private By passwordField = By.name("password");
     private By loginButton = By.xpath("//button[@type='submit']");
 
-    public LoginPage(WebDriver driver) {
+    public DevLoginPage(WebDriver driver) {
         this.driver = driver;
     }
 
