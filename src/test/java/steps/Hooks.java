@@ -47,11 +47,11 @@ public class Hooks {
         if (scenario.isFailed()) {
             test.log(Status.FAIL, "Scenario Failed: " + scenario.getName());
             statusText = "Failed";
-            suffix = "_failed";
+            suffix = "_FAILED";
         } else {
             test.log(Status.PASS, "Scenario Passed.");
             statusText = "Passed";
-            suffix = "_passed";
+            suffix = "_PASSED";
         }
 
         String scenarioName = scenario.getName().replaceAll("[^a-zA-Z0-9]", "_");
