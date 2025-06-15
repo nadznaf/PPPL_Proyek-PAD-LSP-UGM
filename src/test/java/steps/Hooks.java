@@ -41,31 +41,37 @@ public class Hooks {
 
     @After
     public void teardown(Scenario scenario) {
-        // Membuat nama file screenshot yang unik dengan timestamp
-        String scenarioName = scenario.getName().replaceAll("[^a-zA-Z0-9]", "_");
-        String timestamp = java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
-        String uniqueScreenshotName = scenarioName + "_" + timestamp;
+        String statusText;
+        String suffix;
 
         if (scenario.isFailed()) {
             test.log(Status.FAIL, "Scenario Failed: " + scenario.getName());
-            // Mengambil driver dari context untuk screenshot
-            String path = ScreenshotUtil.takeScreenshot(context.getDriver(), uniqueScreenshotName);
+            statusText = "Failed";
+            suffix = "_failed";
+        } else {
+            test.log(Status.PASS, "Scenario Passed.");
+            statusText = "Passed";
+            suffix = "_passed";
+        }
+
+        String scenarioName = scenario.getName().replaceAll("[^a-zA-Z0-9]", "_");
+        String timestamp = java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
+        String fullScreenshotName = scenarioName + suffix + "_" + timestamp;
+
+        if (context.getDriver() != null) {
+            String path = ScreenshotUtil.takeScreenshot(context.getDriver(), fullScreenshotName);
             try {
-                test.addScreenCaptureFromPath(path, "Failed Screenshot");
+                test.addScreenCaptureFromPath(path, statusText + " Screenshot");
             } catch (Exception e) {
                 test.log(Status.WARNING, "Could not attach screenshot: " + e.getMessage());
             }
-        } else {
-            test.log(Status.PASS, "Scenario Passed.");
         }
 
-        // Menutup driver
         if (context.getDriver() != null) {
             context.getDriver().quit();
             test.log(Status.INFO, "Browser closed.");
         }
 
-        // Menulis semua log ke file report
         extent.flush();
     }
 }

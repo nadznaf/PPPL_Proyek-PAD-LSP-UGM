@@ -1,4 +1,4 @@
-Feature: Pengguna Log-Out dari Sistem
+Feature: Logout Feature
 
   Sebagai pengguna yang telah berhasil login,
   Saya ingin dapat keluar dari sistem
