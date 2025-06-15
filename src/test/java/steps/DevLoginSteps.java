@@ -1,4 +1,3 @@
-// src/test/java/steps/DevLoginSteps.java
 package steps;
 
 import com.aventstack.extentreports.Status;
@@ -6,24 +5,17 @@ import io.cucumber.java.en.*;
 import org.openqa.selenium.WebDriver;
 import pages.DashboardAdminPage;
 import pages.DevLoginPage;
-import utils.TestContext; // Pastikan untuk mengimpor TestContext
+import utils.TestContext;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DevLoginSteps {
 
-    // Variabel untuk menyimpan page objects dan context
     private final WebDriver driver;
     private final DevLoginPage loginPage;
     private final DashboardAdminPage dashboardPage;
     private final TestContext context;
 
-    /**
-     * Constructor ini digunakan untuk Dependency Injection.
-     * Ia menerima 'TestContext' yang berisi WebDriver dan ExtentTest yang sama
-     * untuk seluruh skenario.
-     * @param context Shared context yang dikelola oleh Hooks dan Cucumber.
-     */
     public DevLoginSteps(TestContext context) {
         this.context = context;
         this.driver = context.getDriver(); // Mengambil driver dari context
