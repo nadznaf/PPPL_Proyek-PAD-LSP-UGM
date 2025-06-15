@@ -17,7 +17,7 @@ Feature: Competency Unit Management
     And the admin clicks the "Add Competency Unit" button
     And fills out the competency unit form with the following data:
       | Column                        | Value                                                                |
-      | Competency Unit Code          | J.611000.005.21                                              |
+      | Competency Unit Code          | J.611000.005.23                                              |
       | Competency Unit Name          | Designing Code Security                                              |
       | Competency Unit Field         | BIDANG202500009                                                      |
       | Standard Type                 | SKKNI                                                                |
@@ -36,7 +36,7 @@ Feature: Competency Unit Management
     And the admin clicks the "Add Competency Unit" button
     And fills out the competency unit form with the following data:
       | Column                        | Value                                                                 |
-      | Competency Unit Code          | J.611000.005.21                                                       |
+      | Competency Unit Code          | J.611000.005.23                                                    |
       | Competency Unit Name          | Designing Code Security                                                     |
       | Competency Unit Field         | BIDANG202500009                              |
       | Standard Type                 | SKKNI                                                                |

@@ -2,14 +2,17 @@ package steps;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import io.cucumber.java.After;
+import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import utils.ExtentReportManager;
 import utils.ScreenshotUtil;
-import utils.TestContext; // Pastikan import ini ada
+import utils.TestContext;
 
 public class Hooks {
 
@@ -17,61 +20,63 @@ public class Hooks {
     private static final ExtentReports extent = ExtentReportManager.getInstance();
     private ExtentTest test;
 
-    /**
-     * INI BAGIAN KUNCI #1:
-     * Constructor ini akan dipanggil oleh Cucumber/PicoContainer
-     * untuk menyuntikkan instance TestContext yang sama ke semua kelas (Hooks, Steps, dll).
-     */
     public Hooks(TestContext context) {
         this.context = context;
     }
 
     @Before
     public void setup(Scenario scenario) {
-        // Membuat test report untuk skenario ini
         test = extent.createTest(scenario.getName());
-        context.setTest(test); // Menyimpan test ke dalam context agar bisa dipakai di steps lain
-
-        // Membuat driver baru untuk setiap skenario
-        context.setDriver(new ChromeDriver()); // <-- INI BAGIAN KUNCI #2: Driver dimasukkan ke dalam context!
+        context.setTest(test);
+        context.setDriver(new ChromeDriver());
         context.getDriver().manage().window().maximize();
-
-        test.log(Status.INFO, "Browser launched and maximized.");
+        test.log(Status.INFO, "Scenario Started: " + scenario.getName());
     }
 
     @After
     public void teardown(Scenario scenario) {
-        String statusText;
-        String suffix;
+        WebDriver driver = context.getDriver();
+        if (driver != null) {
+            // Ambil screenshot sebagai Base64
+            String base64Screenshot = ScreenshotUtil.takeScreenshotAsBase64(driver);
 
-        if (scenario.isFailed()) {
-            test.log(Status.FAIL, "Scenario Failed: " + scenario.getName());
-            statusText = "Failed";
-            suffix = "_FAILED";
-        } else {
-            test.log(Status.PASS, "Scenario Passed.");
-            statusText = "Passed";
-            suffix = "_PASSED";
-        }
-
-        String scenarioName = scenario.getName().replaceAll("[^a-zA-Z0-9]", "_");
-        String timestamp = java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
-        String fullScreenshotName = scenarioName + suffix + "_" + timestamp;
-
-        if (context.getDriver() != null) {
-            String path = ScreenshotUtil.takeScreenshot(context.getDriver(), fullScreenshotName);
-            try {
-                test.addScreenCaptureFromPath(path, statusText + " Screenshot");
-            } catch (Exception e) {
-                test.log(Status.WARNING, "Could not attach screenshot: " + e.getMessage());
+            // Tentukan status dan log ke report
+            if (scenario.isFailed()) {
+                test.log(Status.FAIL, "Scenario Failed: " + scenario.getName());
+                // Lampirkan screenshot Base64 ke log FAIL
+                attachBase64ScreenshotToReport(test, "Screenshot on Failure:", base64Screenshot);
+            } else {
+                test.log(Status.PASS, "Scenario Passed.");
+                // Lampirkan screenshot Base64 ke log PASS
+                attachBase64ScreenshotToReport(test, "Final Screenshot:", base64Screenshot);
             }
-        }
 
-        if (context.getDriver() != null) {
-            context.getDriver().quit();
+            // Tutup browser
+            driver.quit();
             test.log(Status.INFO, "Browser closed.");
         }
+    }
 
-        extent.flush();
+    /**
+     * Metode bantuan untuk melampirkan screenshot Base64 ke report.
+     */
+    private void attachBase64ScreenshotToReport(ExtentTest test, String title, String base64Image) {
+        if (base64Image != null && !base64Image.isEmpty()) {
+            try {
+                // Menggunakan fail() atau pass() akan memberikan ikon visual di report
+                if (test.getStatus() == Status.FAIL) {
+                    test.fail(title, MediaEntityBuilder.createScreenCaptureFromBase64String(base64Image).build());
+                } else {
+                    test.pass(title, MediaEntityBuilder.createScreenCaptureFromBase64String(base64Image).build());
+                }
+            } catch (Exception e) {
+                test.log(Status.WARNING, "Could not attach Base64 screenshot: " + e.getMessage());
+            }
+        }
+    }
+
+    @AfterAll
+    public static void afterAll() {
+        ExtentReportManager.endReport();
     }
 }
