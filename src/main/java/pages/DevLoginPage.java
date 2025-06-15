@@ -15,6 +15,7 @@ public class DevLoginPage {
     private final By emailField = By.name("email");
     private final By passwordField = By.name("password");
     private final By loginButton = By.xpath("//button[@type='submit']");
+    private final By loginHeader = By.xpath("//h1[contains(text(),'Selamat Datang')]");
 
     // Metode-metode interaksi halaman
     public void goToLoginPage() {
@@ -39,5 +40,10 @@ public class DevLoginPage {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public boolean isAtLoginPage() {
+        boolean loginHeaderExist = driver.findElements(loginHeader).size() > 0;
+        return loginHeaderExist;
     }
 }
