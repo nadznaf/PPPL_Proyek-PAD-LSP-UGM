@@ -67,32 +67,22 @@ public class SchemaCreatePage {
 
         for (String unit : unitsToAdd) {
             String unitToSelect = unit.trim();
-
-            // 1. Tunggu sampai opsi yang kita inginkan ADA di dropdown
             wait.until(ExpectedConditions.presenceOfElementLocated(
                     By.xpath(String.format("//select[@id='id_uk']/option[normalize-space()='%s']", unitToSelect))
             ));
-
-            // 2. Pilih opsi tersebut
             Select selectUnit = new Select(driver.findElement(competencyUnitSelect));
             selectUnit.selectByVisibleText(unitToSelect);
-
-            // 3. Klik tombol Tambah
             driver.findElement(addCompetencyUnitButton).click();
-
-            // 4. Validasi bahwa KODE UK muncul di tabel
             String unitCode = unitToSelect.split(" - ")[0].trim();
             wait.until(ExpectedConditions.textToBePresentInElementLocated(selectedUnitsTableBody, unitCode));
 
-            // --- TAMBAHAN UNTUK STABILITAS ---
-            // Beri jeda singkat untuk memastikan semua script di halaman selesai berjalan
-            // sebelum memulai loop berikutnya.
+            // Jeda singkat untuk stabilitas
             try {
-                Thread.sleep(500); // Tunggu setengah detik
+                Thread.sleep(500); // Tunggu setengah detik untuk stabilitas
             } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            // ------------------------------------
+                // Praktik terbaik untuk menangani interupsi
+                Thread.currentThread().interrupt();
+            };
         }
     }
 

@@ -69,34 +69,25 @@ public class CompetencyUnitSteps {
 
     @Then("the admin should be redirected to the {string} page")
     public void theAdminShouldBeRedirectedToThePage(String pageName) {
-        boolean isAtPage = false;
-        switch (pageName.toLowerCase()) {
-            case "competency unit management":
-                isAtPage = unitPage.isAtCompetencyUnit();
-                break;
-            case "schema management":
-                isAtPage = schemaManagementPage.isAtSchemaPage();
-                break;
-            default:
-                throw new IllegalArgumentException("Page name not recognized: " + pageName);
-        }
+        boolean isAtPage = switch (pageName.toLowerCase()) {
+            case "competency unit management" -> unitPage.isAtCompetencyUnit();
+            case "schema management" -> schemaManagementPage.isAtSchemaPage();
+            default -> throw new IllegalArgumentException("Page name not recognized: " + pageName);
+        };
         assertTrue(isAtPage, "Expected to be at the " + pageName + " page.");
         context.getTest().log(Status.PASS, "Redirected to " + pageName + " page.");
     }
 
     @Then("a success notification {string} appears")
     public void successNotificationAppears(String expectedMessage) {
-        String actualMessage = "";
+        String actualMessage; // Inisialisasi dihilangkan
         String currentUrl = context.getDriver().getCurrentUrl();
 
-        if (currentUrl.contains("/skema") && !currentUrl.contains("/create")) {
+        if (currentUrl != null && currentUrl.contains("/skema") && !currentUrl.contains("/create")) {
             actualMessage = schemaManagementPage.getSuccessNotificationText();
-        }
-        // ---> TAMBAHKAN BLOK 'ELSE IF' INI <---
-        else if (currentUrl.contains("/unit-kompetensi") && !currentUrl.contains("/create")) {
+        } else if (currentUrl != null && currentUrl.contains("/unit-kompetensi") && !currentUrl.contains("/create")) {
             actualMessage = unitPage.getSuccessNotificationText();
-        }
-        else {
+        } else {
             actualMessage = dashboardPage.getSuccessNotificationText();
         }
         assertTrue(actualMessage.contains(expectedMessage), "Success message mismatch.");
