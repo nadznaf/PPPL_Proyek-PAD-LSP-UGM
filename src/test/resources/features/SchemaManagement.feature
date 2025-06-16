@@ -53,3 +53,50 @@ Feature: Certification Schema Management
       5. Mengisi formulir pendaftaran APL-01 dan asesmen mandiri APL-02.
       """
     And the admin clicks the "Save Certification" button
+
+  @negative
+  Scenario: Failing due to competency units empty
+    When the admin clicks the "Schema Management" menu
+    Then the admin should be redirected to the "schema management" page
+    And the admin clicks the "Add Schema" button
+    And fills out the schema form with the following details:
+      | Field               | Value                                                         |
+      | Schema Number       | SKM-KMN-002                                                   |
+      | Schema Name         | Okupasi Analis Keamanan Jaringan (Network Security Analyst)   |
+      | SKKNI Document      | src/test/resources/files/skkni_dummy.pdf                      |
+      | Science Field       | Teknologi Informasi dan Komunikasi                            |
+      | Competency Units    |                                                               |
+    And adds the following basic requirements:
+      """
+      1. Jurusan Teknologi Rekayasa Internet, Teknologo Rekayasa Perangkat Lunak, Sistem informasi, Ilmu Komputer, atau jurusan yang relevan.
+      2. Menyerahkan fotokopi KTP/Paspor yang masih berlaku.
+      3. Menyerahkan Pas Foto terbaru ukuran 3x4 (2 lembar).
+      4. Menyerahkan portofolio proyek/kampanye digital yang pernah ditangani.
+      5. Mengisi formulir pendaftaran APL-01 dan asesmen mandiri APL-02.
+      """
+    And the admin clicks the "Save Certification with Error Schema" button
+    Then an error message should be shown for empty competency units
+
+
+  @negative
+  Scenario: Failing due to SKKNI Document empty
+    When the admin clicks the "Schema Management" menu
+    Then the admin should be redirected to the "schema management" page
+    And the admin clicks the "Add Schema" button
+    And fills out the schema form with the following details:
+      | Field               | Value                                                         |
+      | Schema Number       | SKM-KMN-002                                                   |
+      | Schema Name         | Okupasi Analis Keamanan Jaringan (Network Security Analyst)   |
+      | SKKNI Document      |                                                               |
+      | Science Field       | Teknologi Informasi dan Komunikasi                            |
+      | Competency Units    | J.611000.005.23 - Designing Code Security                     |
+    And adds the following basic requirements:
+      """
+      1. Jurusan Teknologi Rekayasa Internet, Teknologo Rekayasa Perangkat Lunak, Sistem informasi, Ilmu Komputer, atau jurusan yang relevan.
+      2. Menyerahkan fotokopi KTP/Paspor yang masih berlaku.
+      3. Menyerahkan Pas Foto terbaru ukuran 3x4 (2 lembar).
+      4. Menyerahkan portofolio proyek/kampanye digital yang pernah ditangani.
+      5. Mengisi formulir pendaftaran APL-01 dan asesmen mandiri APL-02.
+      """
+    And the admin clicks the "Save Certification with Error Schema" button
+    Then an error message should be shown for empty SKKNI document

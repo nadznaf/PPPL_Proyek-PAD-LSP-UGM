@@ -3,6 +3,8 @@ package steps;
 import com.aventstack.extentreports.Status;
 import io.cucumber.java.en.*;
 import io.cucumber.datatable.DataTable;
+import org.junit.jupiter.api.Assertions;
+import org.testng.asserts.Assertion;
 import pages.SchemaCreatePage;
 import utils.TestContext;
 
@@ -29,4 +31,17 @@ public class SchemaSteps {
         schemaCreatePage.fillRequirements(requirements);
         context.getTest().log(Status.INFO, "Added basic requirements for the schema.");
     }
+
+    @Then("an error message should be shown for empty competency units")
+    public void errorMessageEmptyCompetencyUnits() {
+        String error = schemaCreatePage.getCompetencyUnitError();
+        Assertions.assertTrue(error.contains("Minimal 1 Unit Kompetensi harus dipilih."));
+    }
+
+    @Then("an error message should be shown for empty SKKNI document")
+    public void errorMessageEmptySKKNIDocument() {
+        String error = schemaCreatePage.getSKKNIDocumentError();
+        Assertions.assertTrue(error.contains("The dokumen skkni field is required."));
+    }
+
 }

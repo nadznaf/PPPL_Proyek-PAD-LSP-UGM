@@ -58,6 +58,9 @@ public class CompetencyUnitSteps {
             case "Save Certification":
                 this.dashboardPage = schemaCreatePage.clickSaveButton();
                 break;
+            case "Save Certification with Error Schema":
+                schemaCreatePage.clickSaveButtonExpectingError();
+                break;
             case "Save Competency Unit with Error":
                 competencyUnitCreatePage.clickSaveButtonExpectingError();
                 break;

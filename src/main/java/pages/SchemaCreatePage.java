@@ -27,7 +27,7 @@ public class SchemaCreatePage {
     private final By addCompetencyUnitButton = By.id("tambahBtn");
     private final By selectedUnitsTableBody = By.id("ukTableBody");
     private final By requirementsTextArea = By.id("persyaratan_skema");
-    private final By saveButton = By.xpath("//form//button[@type='submit']");
+    private final By saveButton = By.xpath("/html/body/main/div/div/div[2]/div[2]/form/div/div[6]/button");
 
     public SchemaCreatePage(WebDriver driver) {
         this.driver = driver;
@@ -105,4 +105,16 @@ public class SchemaCreatePage {
 
         return new DashboardAdminPage(driver);
     }
+    public void clickSaveButtonExpectingError() {
+        wait.until(ExpectedConditions.elementToBeClickable(saveButton)).click();
+    }
+
+    public String getCompetencyUnitError() {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/main/div/div/div[2]/div[2]/div/ul/li"))).getText();
+    }
+
+    public String getSKKNIDocumentError() {
+        return driver.findElement(By.xpath("/html/body/main/div/div/div[2]/div[2]/div/ul/li")).getText();
+    }
+
 }
