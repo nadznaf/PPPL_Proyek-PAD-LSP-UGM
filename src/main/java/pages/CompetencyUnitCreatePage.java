@@ -26,8 +26,6 @@ public class CompetencyUnitCreatePage {
     private final By saveButton = By.xpath("//button[contains(text(), 'Simpan Unit Kompetensi')]");
     private final By elementValidationError = By.xpath("/html/body/main/div/div/div[2]/div[2]/div");
 
-    private final By codeFieldValidationError = By.xpath("//input[@id='kode_uk']/following-sibling::p");
-
     public CompetencyUnitCreatePage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -45,10 +43,6 @@ public class CompetencyUnitCreatePage {
         driver.findElement(standardTypeInput).sendKeys(standardType);
     }
 
-    public void selectCompetencyUnitFieldByVisibleText(String visibleText) {
-        Select select = new Select(driver.findElement(competencyUnitFieldSelect));
-        select.selectByVisibleText(visibleText);
-    }
 
     public void selectCompetencyUnitFieldByValue(String valueAttribute) {
         Select select = new Select(driver.findElement(competencyUnitFieldSelect));
