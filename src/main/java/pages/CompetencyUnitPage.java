@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class CompetencyUnitPage {
-    private WebDriver driver;
+    private final WebDriver driver;
     private final WebDriverWait wait;
     public CompetencyUnitPage(WebDriver driver) {
 
@@ -16,7 +16,7 @@ public class CompetencyUnitPage {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
-    private final By competencyUnitPageHeader = By.xpath("//h2[contains(text(),'Manajemen Unit Kompetensi')]");
+    private final By pageTitle = By.xpath("//h2[contains(text(),'Manajemen Unit Kompetensi')]");
     private final By addCompetencyUnitButton = By.xpath("/html/body/main/div/div/div[1]/div/div[2]/a");
 
     private final By successNotification = By.cssSelector("div.bg-green-100 p");
@@ -26,8 +26,7 @@ public class CompetencyUnitPage {
     }
 
     public boolean isAtCompetencyUnit() {
-        boolean dashboardHeaderExist = driver.findElements(competencyUnitPageHeader).size() > 0;
-        return dashboardHeaderExist;
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(pageTitle)).isDisplayed();
     }
 
     public void clickAddCompetencyUnit() {

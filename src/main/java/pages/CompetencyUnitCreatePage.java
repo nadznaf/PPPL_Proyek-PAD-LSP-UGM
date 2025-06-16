@@ -59,7 +59,7 @@ public class CompetencyUnitCreatePage {
         if (elements == null || elements.isEmpty()) {
             return;
         }
-        wait.until(ExpectedConditions.visibilityOfElementLocated(competencyElementInputs)).sendKeys(elements.get(0));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(competencyElementInputs)).sendKeys(elements.getFirst());
 
         for (int i = 1; i < elements.size(); i++) {
             int currentNumberOfInputs = driver.findElements(competencyElementInputs).size();
@@ -79,9 +79,6 @@ public class CompetencyUnitCreatePage {
         wait.until(ExpectedConditions.elementToBeClickable(saveButton)).click();
     }
 
-    public String getCodeFieldValidationError() {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(codeFieldValidationError)).getText();
-    }
 
     public void fillFormWithData(List<List<String>> formData) {
         List<String> competencyElements = formData.stream()
