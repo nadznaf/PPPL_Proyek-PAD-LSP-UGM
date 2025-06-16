@@ -21,8 +21,8 @@ public class DashboardAdminPage {
     private final By logoutButton = By.xpath("//*[@id=\"navbar\"]/form/button");
     private final By competencyUnitButton = By.xpath("//*[@id=\"navbar\"]/a[5]");
     private final By schemaButton = By.xpath("//*[@id=\"navbar\"]/a[4]");
-
     private final By successNotification = By.cssSelector("div.bg-green-100");
+    private final By dashboardLink = By.xpath("//a[.//span[text()='Dashboard']]");
 
     public boolean isAtDashboard() {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(dashboardHeader)).isDisplayed();
@@ -43,5 +43,9 @@ public class DashboardAdminPage {
     public String getSuccessNotificationText() {
         WebElement notification = wait.until(ExpectedConditions.visibilityOfElementLocated(successNotification));
         return notification.findElement(By.tagName("p")).getText();
+    }
+
+    public void returnToDashboard() {
+        wait.until(ExpectedConditions.elementToBeClickable(dashboardLink)).click();
     }
 }

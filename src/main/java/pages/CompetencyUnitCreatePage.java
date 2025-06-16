@@ -70,9 +70,9 @@ public class CompetencyUnitCreatePage {
         }
     }
 
-    public DashboardAdminPage clickSaveButtonAndRedirectToDashboard() {
+    public CompetencyUnitPage clickSaveButtonAndRedirectToUnitPage() {
         wait.until(ExpectedConditions.elementToBeClickable(saveButton)).click();
-        return new DashboardAdminPage(driver);
+        return new CompetencyUnitPage(driver); // Mengembalikan halaman yang benar
     }
 
     public void clickSaveButtonExpectingError() {

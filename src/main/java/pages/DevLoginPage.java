@@ -2,13 +2,18 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class DevLoginPage {
     private WebDriver driver;
+    private final WebDriverWait wait;
 
     // Konstruktor yang benar
     public DevLoginPage(WebDriver driver) {
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     // Lokator elemen halaman login

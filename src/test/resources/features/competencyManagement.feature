@@ -13,11 +13,11 @@ Feature: Competency Unit Management
   @positive
   Scenario: Successfully adding a new competency unit with valid data
     When the admin clicks the "Competency Unit Management" menu
-    Then the admin should be redirected to the competency unit management page
+    Then the admin should be redirected to the "competency unit management" page
     And the admin clicks the "Add Competency Unit" button
     And fills out the competency unit form with the following data:
       | Column                        | Value                                                                |
-      | Competency Unit Code          | J.611000.005.23                                              |
+      | Competency Unit Code          | J.611000.005.23                                                      |
       | Competency Unit Name          | Designing Code Security                                              |
       | Competency Unit Field         | BIDANG202500009                                                      |
       | Standard Type                 | SKKNI                                                                |
@@ -32,13 +32,13 @@ Feature: Competency Unit Management
   @negative
   Scenario: Failing to add a competency unit with a duplicate code
     When the admin clicks the "Competency Unit Management" menu
-    Then the admin should be redirected to the competency unit management page
+    Then the admin should be redirected to the "competency unit management" page
     And the admin clicks the "Add Competency Unit" button
     And fills out the competency unit form with the following data:
-      | Column                        | Value                                                                 |
-      | Competency Unit Code          | J.611000.005.23                                                    |
-      | Competency Unit Name          | Designing Code Security                                                     |
-      | Competency Unit Field         | BIDANG202500009                              |
+      | Column                        | Value                                                                |
+      | Competency Unit Code          | J.611000.005.23                                                      |
+      | Competency Unit Name          | Designing Code Security                                              |
+      | Competency Unit Field         | BIDANG202500009                                                      |
       | Standard Type                 | SKKNI                                                                |
       | Competency Unit Elements      | Identifying threats and security needs of the network.               |
       | Competency Unit Elements      | Designing a secure network topology.                                 |
@@ -51,7 +51,7 @@ Feature: Competency Unit Management
   @positive
   Scenario: Successfully adding a new competency unit with exactly one element
     When the admin clicks the "Competency Unit Management" menu
-    Then the admin should be redirected to the competency unit management page
+    Then the admin should be redirected to the "competency unit management" page
     And the admin clicks the "Add Competency Unit" button
     And fills out the competency unit form with the following data:
       | Column                        | Value                                                                |
@@ -66,7 +66,7 @@ Feature: Competency Unit Management
   @negative
   Scenario: Failing to add a competency unit with zero elements
     When the admin clicks the "Competency Unit Management" menu
-    Then the admin should be redirected to the competency unit management page
+    Then the admin should be redirected to the "competency unit management" page
     And the admin clicks the "Add Competency Unit" button
     And fills out the competency unit form with the following data:
       | Column                        | Value                                                                |
