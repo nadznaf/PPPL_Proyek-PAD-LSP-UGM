@@ -24,6 +24,7 @@ public class CompetencyUnitCreatePage {
     private final By competencyElementInputs = By.cssSelector("input[name='elemen_uk[]']");
     private final By addElementButton = By.id("tambah-elemen-btn");
     private final By saveButton = By.xpath("//button[contains(text(), 'Simpan Unit Kompetensi')]");
+    private final By elementValidationError = By.xpath("/html/body/main/div/div/div[2]/div[2]/div");
 
     private final By codeFieldValidationError = By.xpath("//input[@id='kode_uk']/following-sibling::p");
 
@@ -118,5 +119,9 @@ public class CompetencyUnitCreatePage {
         if (!competencyElements.isEmpty()) {
             fillCompetencyUnitElements(competencyElements);
         }
+    }
+
+    public String getElementValidationError() {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(elementValidationError)).getText();
     }
 }

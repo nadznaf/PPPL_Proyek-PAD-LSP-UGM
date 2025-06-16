@@ -88,9 +88,20 @@ public class CompetencyUnitSteps {
 
     @Then("an error message {string} appears")
     public void errorMessageAppears(String expectedMessage) {
-        String actualMessage = createPage.getCodeFieldValidationError();
+        String actualMessage;
+        
+        // Menentukan jenis error message berdasarkan expected message
+        if (expectedMessage.contains("Kode unit kompetensi sudah digunakan.")) {
+            actualMessage = createPage.getCodeFieldValidationError();
+        } else if (expectedMessage.contains("Minimal harus ada satu elemen unit kompetensi")) {
+            actualMessage = createPage.getElementValidationError();
+        } else {
+            // Default untuk pesan error lainnya
+            actualMessage = createPage.getCodeFieldValidationError();
+        }
 
-        assertTrue(actualMessage.contains(expectedMessage), "Error message mismatch.");
-        context.getTest().log(Status.PASS, "Field validation error appeared: " + actualMessage);
+        assertTrue(actualMessage.contains(expectedMessage), 
+            "Error message mismatch. Expected: '" + expectedMessage + "', Actual: '" + actualMessage + "'");
+        context.getTest().log(Status.PASS, "Validation error appeared: " + actualMessage);
     }
 }
