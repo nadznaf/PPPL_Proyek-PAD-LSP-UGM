@@ -21,7 +21,7 @@ Feature: Certification Schema Management
       | Schema Name         | Okupasi Analis Keamanan Jaringan (Network Security Analyst)   |
       | SKKNI Document      | src/test/resources/files/skkni_dummy.pdf                      |
       | Science Field       | Teknologi Informasi dan Komunikasi                            |
-      | Competency Units    | J.611000.005.02 - Merancang Keamanan Jaringan, J.611000.006.23 - Designing Code Security                 |
+      | Competency Units    | J.611000.006.23 - Single Element Competency Unit, J.611000.005.23 - Designing Code Security                 |
     And adds the following basic requirements:
       """
       1. Jurusan Teknologi Rekayasa Internet, Teknologo Rekayasa Perangkat Lunak, Sistem informasi, Ilmu Komputer, atau jurusan yang relevan.
@@ -43,7 +43,7 @@ Feature: Certification Schema Management
       | Schema Name         | Okupasi Analis Keamanan Jaringan (Network Security Analyst)   |
       | SKKNI Document      | src/test/resources/files/skkni_dummy.pdf                      |
       | Science Field       | Teknologi Informasi dan Komunikasi                            |
-      | Competency Units    | J.611000.005.02 - Merancang Keamanan Jaringan                 |
+      | Competency Units    | J.611000.005.23 - Designing Code Security                     |
     And adds the following basic requirements:
       """
       1. Jurusan Teknologi Rekayasa Internet, Teknologo Rekayasa Perangkat Lunak, Sistem informasi, Ilmu Komputer, atau jurusan yang relevan.
